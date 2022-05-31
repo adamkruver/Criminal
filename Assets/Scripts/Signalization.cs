@@ -11,44 +11,41 @@ public class Signalization : MonoBehaviour
     [SerializeField] private float _fadeSpeed = 2f;
 
     private AudioSource _audio;
-    private bool _isSignalizationWorks = false;
+    private Coroutine _fadeJob;
 
     private void Start() 
     {
         _audio = GetComponent<AudioSource>();
-        _audio.volume = 0;
+        _audio.volume = _minVolume;
     }
 
-    private void Update() 
+    private IEnumerator FadeVolume(float targetVolume) 
     {
-        FadeVolume();
-    }
+        _audio.Play();
 
-    private void FadeVolume() 
-    {
-        if(_isSignalizationWorks) {
-            if(_audio.volume == _minVolume) 
-                _audio.Play();
+        while(_audio.volume != targetVolume) {
 
-            _audio.volume = Mathf.MoveTowards(_audio.volume, _maxVolume, _fadeSpeed * Time.deltaTime);
-        }
-        else 
-        {
-            _audio.volume = Mathf.MoveTowards(_audio.volume, _minVolume, _fadeSpeed * Time.deltaTime);
-
-            if(_audio.volume == _maxVolume) 
-                _audio.Stop();
+            yield return null;
+            _audio.volume = Mathf.MoveTowards(_audio.volume, targetVolume, _fadeSpeed * Time.deltaTime);
         }
 
+        if(_audio.volume == _minVolume)
+            _audio.Stop();
     }
 
     public void Run() 
     {
-        _isSignalizationWorks = true;
+        if(_fadeJob != null)
+            StopCoroutine(_fadeJob);
+
+        _fadeJob = StartCoroutine(FadeVolume(_maxVolume));
     }
 
     public void Stop() 
     {
-        _isSignalizationWorks = false;
+        if(_fadeJob != null)
+            StopCoroutine(_fadeJob);
+
+        _fadeJob = StartCoroutine(FadeVolume(_minVolume));
     }
 }

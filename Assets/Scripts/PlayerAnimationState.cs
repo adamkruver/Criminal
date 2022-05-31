@@ -20,7 +20,7 @@ public class PlayerAnimationState : MonoBehaviour
         if(_speed != _currentSpeed) 
         {
             _currentSpeed = Mathf.MoveTowards(_currentSpeed, _speed, _animationChangeSpeed * Time.deltaTime);
-            _animator.SetFloat("Speed", _currentSpeed);
+            _animator.SetFloat(ThiefAnimator.Speed, _currentSpeed);
         }
     }
 
@@ -41,11 +41,11 @@ public class PlayerAnimationState : MonoBehaviour
 
     public void StartUpStairs() 
     {
-        _animator.SetTrigger("Start Walking Up The Strait");
+        _animator.SetTrigger(ThiefAnimator.StartWalkingUpTheStrait);
     }
 
     public void StopUpStairs() 
     {
-        _animator.SetTrigger("Stop Walking Up The Strait");
+        _animator.SetTrigger(ThiefAnimator.StopWalkingUpTheStrait);
     }
 }
