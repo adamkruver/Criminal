@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WaypointAction : MonoBehaviour
+public class PlayerAnimationChanger : MonoBehaviour
 {
     [SerializeField] private UnityEvent OnEnterWaypoint;
 

@@ -5,15 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimationState : MonoBehaviour
 {
+    [SerializeField] private float _animationChangeSpeed = .2f;
+
     private readonly float _walkSpeed = 1f;
     private readonly float _runSpeed = 2f;
 
-    [SerializeField] private float _animationChangeSpeed = .2f;
-
+    private Animator _animator;
+    
     private float _currentSpeed = .9f;
     private float _speed = 1f;
 
-    private Animator _animator;
 
     private void Update() 
     {

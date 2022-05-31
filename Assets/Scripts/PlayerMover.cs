@@ -8,6 +8,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private float _speed = 2f;
 
     private List<Transform> _waypoints = new List<Transform>();
+
     private int _currentWaypointIndex = 0;
 
     private void Start() 
@@ -25,7 +26,7 @@ public class PlayerMover : MonoBehaviour
 
     private void MoveToWaypoint() 
     {
-        if(_waypoints.Count < 1)
+        if(_waypoints.Count == 0)
             return;
 
         var currentPosition = transform.position;
@@ -35,8 +36,7 @@ public class PlayerMover : MonoBehaviour
 
         if(transform.position == targetPosition) 
         {
-
-            _currentWaypointIndex += 1;
+            _currentWaypointIndex ++;
 
             if(_currentWaypointIndex >= _waypoints.Count)
                 ResetWaypointPosition();
@@ -45,7 +45,10 @@ public class PlayerMover : MonoBehaviour
 
     private void ResetWaypointPosition() 
     {
-        transform.position = _waypoints[0].position;
-        _currentWaypointIndex = 1;
+        if(_waypoints.Count == 0)
+            return;
+
+        _currentWaypointIndex = 0;
+        transform.position = _waypoints[_currentWaypointIndex].position;
     }
 }

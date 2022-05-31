@@ -5,19 +5,17 @@ using UnityEngine.Events;
 
 public class Door : MonoBehaviour
 {
-    [SerializeField] private UnityEvent OnPlayerEnter;
-    [SerializeField] private UnityEvent OnPlayerExit;
-
+    [SerializeField] private UnityEvent<bool> IsPlayerInside;
 
     private void OnTriggerEnter(Collider other) 
     {
         if(other.TryGetComponent<Player>(out Player player)) 
-            OnPlayerEnter?.Invoke();
+            IsPlayerInside?.Invoke(true);
     }
 
     private void OnTriggerExit(Collider other) 
     {
         if(other.TryGetComponent<Player>(out Player player)) 
-            OnPlayerExit?.Invoke();
+            IsPlayerInside?.Invoke(false);
     }
 }
